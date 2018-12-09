@@ -7,7 +7,7 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
     // 全局变量
     state: {
-        user: undefined
+        user: undefined,
     },
     // 修改全局变量必须通过mutations中的方法
     // mutations只能采用同步方法

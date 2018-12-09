@@ -8,27 +8,30 @@
         <FormItem label="E-mail" prop="mail">
             <Input v-model="formValidate.mail" placeholder="Enter your e-mail"></Input>
         </FormItem>
-        <FormItem label="Age" prop="age">
-            <Input type="text" v-model="formCustom.age" number></Input>
+        <FormItem label="Telephone" prop="tel">
+            <Input v-model="formValidate.tel" placeholder="Enter your telephone"></Input>
+        </FormItem>
+        <!-- <FormItem label="Age" prop="age">
+            <Input type="text" v-model="formValidate.age" number></Input>
         </FormItem>
         <FormItem label="Gender" prop="gender">
             <RadioGroup v-model="formValidate.gender">
                 <Radio label="male">Male</Radio>
                 <Radio label="female">Female</Radio>
             </RadioGroup>
-        </FormItem>
-        <FormItem label="Address" prop="desc">
+        </FormItem> -->
+        <FormItem label="Address" prop="addr">
             <Input v-model="formValidate.address" placeholder="Enter your address"></Input>
         </FormItem>
         <FormItem label="Password" prop="passwd">
-            <Input type="password" v-model="formCustom.passwd"></Input>
+            <Input type="password" v-model="formValidate.passwd"></Input>
         </FormItem>
         <FormItem label="Confirm" prop="passwdCheck">
-            <Input type="password" v-model="formCustom.passwdCheck"></Input>
+            <Input type="password" v-model="formValidate.passwdCheck"></Input>
         </FormItem>
         <FormItem>
-            <Button type="primary" @click="handleSubmit('formValidate')">Submit</Button>
-            <Button @click="handleReset('formValidate')" style="margin-left: 8px">Reset</Button>
+            <Button type="primary" @click="handleSubmit(formValidate)">Submit</Button>
+            <Button @click="handleReset(formValidate)" style="margin-left: 8px">Reset</Button>
         </FormItem>
     </Form>
   </Card>
@@ -40,9 +43,9 @@
                 if (value === '') {
                     callback(new Error('Please enter your password'));
                 } else {
-                    if (this.formCustom.passwdCheck !== '') {
+                    if (this.formValidate.passwdCheck !== '') {
                         // 对第二个密码框单独验证
-                        this.$refs.formCustom.validateField('passwdCheck');
+                        this.$refs.formValidate.validateField('passwdCheck');
                     }
                     callback();
                 }
@@ -50,7 +53,7 @@
             const validatePassCheck = (rule, value, callback) => {
                 if (value === '') {
                     callback(new Error('Please enter your password again'));
-                } else if (value !== this.formCustom.passwd) {
+                } else if (value !== this.formValidate.passwd) {
                     callback(new Error('The two input passwords do not match!'));
                 } else {
                     callback();
@@ -74,15 +77,16 @@
                 }, 1000);
             };
             return {
+                err: '',
                 formValidate: {
-                    name: '',
-                    mail: '',
-                    city: '',
-                    gender: '',
-                    interest: [],
-                    date: '',
-                    time: '',
-                    desc: ''
+                    name: null,
+                    mail: null,
+                    tel: null,
+                    age: null,
+                    gender: null,
+                    address: null,
+                    passwd: null,
+                    passwdCheck: null
                 },
                 ruleValidate: {
                     name: [
@@ -92,33 +96,16 @@
                         { required: true, message: 'Mailbox cannot be empty', trigger: 'blur' },
                         { type: 'email', message: 'Incorrect email format', trigger: 'blur' }
                     ],
-                    city: [
-                        { required: true, message: 'Please select the city', trigger: 'change' }
+                    mail: [
+                        { required: true, message: 'Telephone cannot be empty', trigger: 'blur' },
+                        { type: 'string', message: 'Incorrect telephone format', trigger: 'blur' }
                     ],
                     gender: [
                         { required: true, message: 'Please select gender', trigger: 'change' }
                     ],
-                    interest: [
-                        { required: true, type: 'array', min: 1, message: 'Choose at least one hobby', trigger: 'change' },
-                        { type: 'array', max: 2, message: 'Choose two hobbies at best', trigger: 'change' }
+                    address: [
+                        { required: true, message: 'Please enter a personal address', trigger: 'blur' }
                     ],
-                    date: [
-                        { required: true, type: 'date', message: 'Please select the date', trigger: 'change' }
-                    ],
-                    time: [
-                        { required: true, type: 'string', message: 'Please select time', trigger: 'change' }
-                    ],
-                    desc: [
-                        { required: true, message: 'Please enter a personal introduction', trigger: 'blur' },
-                        { type: 'string', min: 20, message: 'Introduce no less than 20 words', trigger: 'blur' }
-                    ]
-                },
-                formCustom: {
-                    passwd: '',
-                    passwdCheck: '',
-                    age: ''
-                },
-                ruleCustom: {
                     passwd: [
                         { validator: validatePass, trigger: 'blur' }
                     ],
@@ -132,18 +119,42 @@
             }
         },
         methods: {
-            handleSubmit (name) {
-              // 未完成
-                this.$refs[name].validate((valid) => {
-                    if (valid) {
-                        this.$Message.success('Success!');
-                    } else {
-                        this.$Message.error('Fail!');
-                    }
-                })
+            handleSubmit (user) {
+              this.axios.post('/register', {
+                'username': user.name,
+                'password': user.passwd,
+                'telephone': user.tel,
+                'email': user.email,
+                'address': user.address
+              }).then((response) => {
+                this.$router.replace('/login')
+                this.success()
+              }).catch((err) => {
+                this.err = err.response.data.message
+                this.error()
+              })
             },
-            handleReset (name) {
-                this.$refs[name].resetFields();
+            handleReset (user) {
+                this.formValidate.name = null
+                this.formValidate.mail = null
+                this.formValidate.tel = null
+                this.formValidate.age = null
+                this.formValidate.gender = null
+                this.formValidate.address = null
+                this.formValidate.passwd = null
+                this.formValidate.passwdCheck = null
+            },
+            success (nodesc) {
+              this.$Notice.open({
+                title: 'Register Success',
+                desc: nodesc ? '' : 'Please login with your username and password'
+              });
+            },
+            error (nodesc) {
+              this.$Notice.error({
+                title: 'register failed',
+                desc: nodesc ? '' : this.err
+              });
             }
         }
     }

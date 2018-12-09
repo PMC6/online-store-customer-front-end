@@ -25,7 +25,7 @@ export default {
 #header {
   position: fixed;
   width: 100%;
-  z-index: 9;
+  z-index: 2;
 }
 #layout {
   margin-top: 5%;

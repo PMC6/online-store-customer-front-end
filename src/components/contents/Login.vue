@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Card style="width:40%;margin:20px auto;background:#eee;">
+    <Card style="width:40%;margin:40px auto;background:#eee;">
       <p slot="title">Customer login page</p>
       <Form ref="formInline" style="margin:10px auto;" :model="formInline" :rules="ruleInline" inline>
           <FormItem prop="user">
@@ -10,7 +10,8 @@
           </FormItem>
           <br>
           <FormItem prop="password">
-              <Input type="password" size="large" v-model="formInline.password" placeholder="Password">
+              <Input type="password" size="large" v-model="formInline.password"
+              placeholder="Password" @keyup.enter.native="handleSubmit(formInline)">
                   <Icon type="ios-lock-outline" slot="prepend"></Icon>
               </Input>
           </FormItem>
@@ -64,17 +65,17 @@
             this.login(data.user, data.password)
           },
           success (nodesc) {
-                this.$Notice.open({
-                    title: 'Login Success',
-                    desc: nodesc ? '' : 'Hello '+this.formInline.user+ '. Welcome to PARKnSHOP'
-                });
-            },
-            error (nodesc) {
-                this.$Notice.error({
-                    title: 'Login failed',
-                    desc: nodesc ? '' : 'username or password is not correct '
-                });
-            }
+            this.$Notice.open({
+              title: 'Login Success',
+              desc: nodesc ? '' : 'Hello '+this.formInline.user+ '. Welcome to PARKnSHOP'
+            });
+          },
+          error (nodesc) {
+            this.$Notice.error({
+              title: 'Login failed',
+              desc: nodesc ? '' : 'username or password is not correct '
+            });
+          }
         }
     }
 </script>

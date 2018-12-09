@@ -9,11 +9,11 @@
               <template slot="title">
                 {{user.name}}
               </template>
-              <MenuItem name="2-1" to="/">Home</MenuItem>
+              <MenuItem name="2-1" to="/home">Home</MenuItem>
               <MenuItem name="2-2" @click.native="logout()">Logout</MenuItem>
           </Submenu>
           <MenuItem name="3">
-            Cart
+            <Icon type="ios-cart" size="24" />
           </MenuItem>
         </div>
         <div v-else style="float:right;">
