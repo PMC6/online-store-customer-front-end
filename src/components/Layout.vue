@@ -14,21 +14,21 @@ import Header from './Header'
 import Content from './Content'
 
 export default {
-  components: {
-    'Header': Header,
-    'Content': Content
-  }
+    components: {
+        'Header': Header,
+        'Content': Content
+    }
 }
 </script>
 
-<style scope>
+<style scoped>
 #header {
   position: fixed;
   width: 100%;
   z-index: 2;
 }
 #layout {
-  margin-top: 5%;
+  margin-top: 70px;
   z-index: 1;
   display: inline-block;
   min-height: 82vh;

@@ -34,7 +34,7 @@
         <Divider />
         <div class="container" style="margin-bottom:4%;">
           <h3 class="h3">
-              <Input required='' @keyup.enter.native="search()" v-model="searchName" search placeholder="Enter something..."style="width:60%;"/>
+              <Input required='' @keyup.enter.native="search(pageNum, pageSize)" v-model="searchName" search placeholder="Enter something..."style="width:60%;"/>
           </h3>
           <div v-if="productList.length == 0" class="demo-spin-container">
               <Spin fix>
@@ -60,6 +60,9 @@
                 </div>
             </div>
           </div>
+          <Divider />
+          <Page :total="pageTotal" :current="pageNum" :page-size="pageSize" show-elevator show-sizer show-total
+          placement="top" @on-change="handlePage" @on-page-size-change='handlePageSize'></Page>
           <Modal v-if="product" v-model="modal" width="720">
               <p slot="header" style="text-align:center">
                   <Icon type="md-cloud-done" />
@@ -120,40 +123,39 @@ export default {
     return {
       value: 0, flag: true, modal: false, modal_loading: false,
       productList: [], searchName: '', product: null,
-      arr: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+      pageTotal: 0, pageNum: 1, pageSize: 8
     }
   },
   components: {
       'Product': Product
   },
   mounted: function() {
-    this.list()
+      this.list(this.pageNum, this.pageSize)
   },
   methods: {
-    list() {
-      axios.get('/list', {
-        params: {
-          'page': 0,
-          'size': 10
-        }
-      }).then((response) => {
-        this.productList = response.data.data
-        this.flag = false
-      }).catch((err) => {
-        console.error(err.response)
-      })
-    },
-    search() {
+    list(page, size) {
         this.productList = []
+        this.amount()
+        axios.get('/list', { params: {'page': page-1,'size': size}
+        }).then((response) => {
+            this.productList = response.data.data
+            this.flag = false
+        }).catch((err) => {
+            console.error(err.response)
+        })
+    },
+    amount() {
+        this.axios.get('/amount').then((response) => {
+            this.pageTotal = response.data.data
+        }).catch((err) => {console.error(err.response)})
+    },
+    search(page, size) {
+        this.productList = []
+        this.amountByName()
         if (this.searchName == "") {
-            this.list()
+            this.list(this.pageNum, this.pageSize)
         } else {
-            axios.get('/product/search', {
-                params: {
-                    'name': this.searchName,
-                    'page': 0,
-                    'size': 10
-                }
+            axios.get('/product/search', { params: { 'name': this.searchName, 'page': page-1, 'size': size}
             }).then((response) => {
                 this.productList = response.data.data
             }).catch((err) => {
@@ -161,6 +163,11 @@ export default {
                 this.error()
             })
         }
+    },
+    amountByName() {
+        this.axios.get('/product/search/amount', {params:{name: this.searchName}})
+        .then((response) => {this.pageTotal=response.data.data})
+        .catch((err) => {console.error(err.response)})
     },
     error(nodesc) {
       this.$Notice.error({
@@ -171,6 +178,20 @@ export default {
     clickEvent(product) {
         this.modal = true
         this.product = product
+    },
+    handlePage(data) {
+        this.pageNum = data
+        if (this.searchName)
+            this.search(this.pageNum, this.pageSize)
+        else
+            this.list(this.pageNum, this.pageSize)
+    },
+    handlePageSize(data) {
+        this.pageSize = data
+        if (this.searchName)
+            this.search(this.pageNum, this.pageSize)
+        else
+            this.list(this.pageNum, this.pageSize)
     }
   }
 }

@@ -35,8 +35,14 @@
       },
       methods: {
           logout() {
-            this.$store.dispatch('logout').then(() => {
-              this.$router.replace('/login')
+            this.axios.get('/logout').then((response) => {
+                this.$store.dispatch('logout').then(() => {
+                  this.$router.replace('/login')
+                })
+            }).catch((err) => {
+                this.$store.dispatch('logout').then(() => {
+                  this.$router.replace('/login')
+                })
             })
           }
         },
