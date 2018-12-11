@@ -104,10 +104,10 @@
                         { required: true, message: 'Please enter a personal address', trigger: 'blur' }
                     ],
                     passwd: [
-                        { validator: validatePass, trigger: 'blur' }
+                        { required: true, validator: validatePass, trigger: 'blur' }
                     ],
                     passwdCheck: [
-                        { validator: validatePassCheck, trigger: 'blur' }
+                        { required: true, validator: validatePassCheck, trigger: 'blur' }
                     ],
                     age: [
                         { validator: validateAge, trigger: 'blur' }
