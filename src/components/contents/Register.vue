@@ -1,7 +1,5 @@
 <template>
-  <Card style="width:30%;margin:20px auto;background:#eee;">
-    <p slot="title">Register your information</p>
-    <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
+    <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80" style="width:30%;margin: 50px auto;">
         <FormItem label="Name" prop="name">
             <Input v-model="formValidate.name" placeholder="Enter your name"></Input>
         </FormItem>
@@ -34,7 +32,6 @@
             <Button @click="handleReset(formValidate)" style="margin-left: 8px">Reset</Button>
         </FormItem>
     </Form>
-  </Card>
 </template>
 <script>
     export default {

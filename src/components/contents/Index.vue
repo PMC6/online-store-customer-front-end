@@ -102,7 +102,7 @@
                           </Button>
                       </Col>
                       <Col span="12" align="left">
-                          <Button style="width:80%;" type="info" size="large" long :loading="modal_loading">
+                          <Button @click="addToCart()" style="width:80%;" type="info" size="large" long :loading="modal_loading">
                               <Icon type="ios-cart" size="18" /> Add To Cart
                           </Button>
                       </Col>
@@ -192,6 +192,13 @@ export default {
             this.search(this.pageNum, this.pageSize)
         else
             this.list(this.pageNum, this.pageSize)
+    },
+    addToCart() {
+        this.axios.post('/customer/cart/add', {productid:this.product.id, number:1})
+        .then((response) => {this.$Notice.success({
+            title: 'Successful', desc: 'Add one product in your cart'
+        })})
+        .catch((err) => {console.error(err.response)})
     }
   }
 }

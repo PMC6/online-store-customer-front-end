@@ -5,6 +5,7 @@ import Index from '@/components/contents/Index'
 import Login from '@/components/contents/Login'
 import Register from '@/components/contents/Register'
 import Home from '@/components/contents/Home'
+import Cart from '@/components/contents/Cart'
 
 Vue.use(Router)
 
@@ -35,6 +36,11 @@ export default new Router({
         path: '/home',
         name: 'Home',
         component: Home
+    },
+    {
+        path: '/cart',
+        name: 'Cart',
+        component: Cart
     }
   ]
 })

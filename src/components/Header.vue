@@ -6,13 +6,13 @@
         </MenuItem>
         <div v-if="user" style="float:right;">
           <Submenu name="2">
-              <template slot="title">
+              <template v-if="user.name" slot="title">
                 {{user.name}}
               </template>
               <MenuItem name="2-1" to="/home">Home</MenuItem>
               <MenuItem name="2-2" @click.native="logout()">Logout</MenuItem>
           </Submenu>
-          <MenuItem name="3">
+          <MenuItem name="3" to="/cart">
             <Icon type="ios-cart" size="24" />
           </MenuItem>
         </div>

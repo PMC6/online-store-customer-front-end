@@ -1,14 +1,16 @@
 <template>
     <Tabs id="tabs" value="name1">
-        <TabPane label="Customer Information" name="name1">
+        <TabPane label="My Detail" name="name1">
             <Info></Info>
         </TabPane>
-        <TabPane label="Tab 2" name="name2">标签二的内容</TabPane>
-        <TabPane label="Tab 3" name="name3">标签三的内容</TabPane>
+        <TabPane label="Change Password" name="name3">
+            <ChangePasswd></ChangePasswd>
+        </TabPane>
     </Tabs>
 </template>
 <script>
 import Info from './tab/Info'
+import ChangePasswd from './tab/ChangePasswd'
 
 export default {
     data() {
@@ -17,7 +19,8 @@ export default {
         }
     },
     components: {
-        'Info': Info
+        'Info': Info,
+        'ChangePasswd': ChangePasswd
     }
 }
 </script>
