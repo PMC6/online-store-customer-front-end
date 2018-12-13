@@ -121,7 +121,7 @@
                 'username': user.name,
                 'password': user.passwd,
                 'telephone': user.tel,
-                'email': user.email,
+                'email': user.mail,
                 'address': user.address
               }).then((response) => {
                 this.$router.replace('/login')

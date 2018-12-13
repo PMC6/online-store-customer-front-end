@@ -138,6 +138,7 @@ export default {
         this.amount()
         axios.get('/list', { params: {'page': page-1,'size': size}
         }).then((response) => {
+            console.log(response.data.data)
             this.productList = response.data.data
             this.flag = false
         }).catch((err) => {
@@ -198,7 +199,9 @@ export default {
         .then((response) => {this.$Notice.success({
             title: 'Successful', desc: 'Add one product in your cart'
         })})
-        .catch((err) => {console.error(err.response)})
+        .catch((err) => {this.$Notice.error({
+            title: 'Failed', desc: 'Please login this system'
+        })})
     }
   }
 }

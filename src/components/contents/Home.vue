@@ -3,6 +3,8 @@
         <TabPane label="My Detail" name="name1">
             <Info></Info>
         </TabPane>
+        <TabPane label="Open Shop" name="name2">
+        </TabPane>
         <TabPane label="Change Password" name="name3">
             <ChangePasswd></ChangePasswd>
         </TabPane>
