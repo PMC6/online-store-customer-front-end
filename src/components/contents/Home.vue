@@ -3,15 +3,21 @@
         <TabPane label="My Detail" name="name1">
             <Info></Info>
         </TabPane>
-        <TabPane label="Open Shop" name="name2">
+        <TabPane label="Favorite Shop List" name="name2">
+            <WishShop></WishShop>
         </TabPane>
-        <TabPane label="Change Password" name="name3">
+        <TabPane label="Favorite Product List" name="name3">
+            <WishProduct></WishProduct>
+        </TabPane>
+        <TabPane label="Change Password" name="name4">
             <ChangePasswd></ChangePasswd>
         </TabPane>
     </Tabs>
 </template>
 <script>
 import Info from './tab/Info'
+import WishShop from './tab/WishShop'
+import WishProduct from './tab/WishProduct'
 import ChangePasswd from './tab/ChangePasswd'
 
 export default {
@@ -22,13 +28,15 @@ export default {
     },
     components: {
         'Info': Info,
+        'WishShop': WishShop,
+        'WishProduct': WishProduct,
         'ChangePasswd': ChangePasswd
     }
 }
 </script>
-<style>
+<style scoped>
 #tabs {
-    margin-left: 4%;
-    margin-right: 4%;
+    margin-left: 8%;
+    margin-right: 8%;
 }
 </style>

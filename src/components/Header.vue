@@ -17,10 +17,7 @@
           </MenuItem>
         </div>
         <div v-else style="float:right;">
-          <MenuItem name="2" to="/login">Login</MenuItem>
-          <MenuItem name="3" to="/register">
-            Register
-          </MenuItem>
+          <MenuItem name="2" to="/login">Login / Join</MenuItem>
         </div>
     </Menu>
     <br>

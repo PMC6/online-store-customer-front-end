@@ -85,10 +85,11 @@
                           </p>
                           <p v-if="product.shop.name" style="font-size:18px;">
                               <Icon v-if="product.shop.name" type="ios-appstore" /> {{product.shop.name}}
-                              <Button type="success" shape="circle" size="small"><Icon type="ios-heart" /></Button>
+                              <Button @click="addShop()" type="success" shape="circle" size="small"><Icon type="ios-heart" /></Button>
                           </p>
                           <Divider />
                           <p v-if="product.info"><Icon type="md-attach" size="18" /> {{product.info}}</p>
+                          <p style="font-size:16px;color:#ed4014;"><Icon type="md-attach" size="18" />{{product.number}} left in stock</p>
                           <Divider />
                           <p v-if="product.price" style="font-size:32px;bottom:0;">$ {{product.price}}</p>
                       </Col>
@@ -97,7 +98,7 @@
               <div slot="footer">
                   <Row style="text-align:center;">
                       <Col span="12">
-                          <Button style="width:80%;" type="success" size="large" long :loading="modal_loading">
+                          <Button @click="addProduct()" style="width:80%;" type="success" size="large" long :loading="modal_loading">
                               <Icon type="md-heart" /> Add To WishList
                           </Button>
                       </Col>
@@ -138,7 +139,6 @@ export default {
         this.amount()
         axios.get('/list', { params: {'page': page-1,'size': size}
         }).then((response) => {
-            console.log(response.data.data)
             this.productList = response.data.data
             this.flag = false
         }).catch((err) => {
@@ -195,11 +195,27 @@ export default {
             this.list(this.pageNum, this.pageSize)
     },
     addToCart() {
-        this.axios.post('/customer/cart/add', {productid:this.product.id, number:1})
+        this.axios.post('/customer/cart/add', {id:this.product.id, number:1})
         .then((response) => {this.$Notice.success({
             title: 'Successful', desc: 'Add one product in your cart'
         })})
         .catch((err) => {this.$Notice.error({
+            title: 'Failed', desc: 'Please login this system'
+        })})
+    },
+    addShop() {
+        this.axios.post('/customer/favorite/add', {id:this.product.shop.id, type:1})
+        .then((response) => {this.$Notice.success({
+            title: 'Successful', desc: 'Add one shop in your WishList'
+        })}).catch((err) => {this.$Notice.error({
+            title: 'Failed', desc: 'Please login this system'
+        })})
+    },
+    addProduct() {
+        this.axios.post('/customer/favorite/add', {id:this.product.id, type:3})
+        .then((response) => {this.$Notice.success({
+            title: 'Successful', desc: 'Add one product in your WishList'
+        })}).catch((err) => {this.$Notice.error({
             title: 'Failed', desc: 'Please login this system'
         })})
     }

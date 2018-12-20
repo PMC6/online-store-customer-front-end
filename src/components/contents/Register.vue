@@ -1,37 +1,48 @@
 <template>
-    <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80" style="width:30%;margin: 50px auto;">
-        <FormItem label="Name" prop="name">
-            <Input v-model="formValidate.name" placeholder="Enter your name"></Input>
-        </FormItem>
-        <FormItem label="E-mail" prop="mail">
-            <Input v-model="formValidate.mail" placeholder="Enter your e-mail"></Input>
-        </FormItem>
-        <FormItem label="Telephone" prop="tel">
-            <Input v-model="formValidate.tel" placeholder="Enter your telephone"></Input>
-        </FormItem>
-        <!-- <FormItem label="Age" prop="age">
-            <Input type="text" v-model="formValidate.age" number></Input>
-        </FormItem>
-        <FormItem label="Gender" prop="gender">
-            <RadioGroup v-model="formValidate.gender">
-                <Radio label="male">Male</Radio>
-                <Radio label="female">Female</Radio>
-            </RadioGroup>
-        </FormItem> -->
-        <FormItem label="Address" prop="addr">
-            <Input v-model="formValidate.address" placeholder="Enter your address"></Input>
-        </FormItem>
-        <FormItem label="Password" prop="passwd">
-            <Input type="password" v-model="formValidate.passwd"></Input>
-        </FormItem>
-        <FormItem label="Confirm" prop="passwdCheck">
-            <Input type="password" v-model="formValidate.passwdCheck"></Input>
-        </FormItem>
-        <FormItem>
-            <Button type="primary" @click="handleSubmit(formValidate)">Submit</Button>
-            <Button @click="handleReset(formValidate)" style="margin-left: 8px">Reset</Button>
-        </FormItem>
-    </Form>
+    <div style="width:80%;margin: 0 auto;">
+        <p class="login-title">Create an Account <a href="#/login">(back to login)</a></p>
+        <Divider />
+        <div class='container'>
+            <Form inline ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80" style="width:60%;margin: 20px auto;">
+                <img style="width:120px;height:120px;"
+                 src="http://www.twwd.org/dashboard/wp-content/uploads/2014/08/avatar-circle-human-male-2-512.png"></img>
+                 <br>
+                 <br>
+                <FormItem label="Name" prop="name">
+                    <Input v-model="formValidate.name" placeholder="Enter your name"></Input>
+                </FormItem>
+                <FormItem label="E-mail" prop="mail">
+                    <Input v-model="formValidate.mail" placeholder="Enter your e-mail"></Input>
+                </FormItem>
+                <FormItem label="Telephone" prop="tel">
+                    <Input v-model="formValidate.tel" placeholder="Enter your telephone"></Input>
+                </FormItem>
+                <!-- <FormItem label="Age" prop="age">
+                    <Input type="text" v-model="formValidate.age" number></Input>
+                </FormItem>
+                <FormItem label="Gender" prop="gender">
+                    <RadioGroup v-model="formValidate.gender">
+                        <Radio label="male">Male</Radio>
+                        <Radio label="female">Female</Radio>
+                    </RadioGroup>
+                </FormItem> -->
+                <FormItem label="Address" prop="addr">
+                    <Input v-model="formValidate.address" placeholder="Enter your address"></Input>
+                </FormItem>
+                <FormItem label="Password" prop="passwd">
+                    <Input type="password" v-model="formValidate.passwd"></Input>
+                </FormItem>
+                <FormItem label="Confirm" prop="passwdCheck">
+                    <Input type="password" v-model="formValidate.passwdCheck"></Input>
+                </FormItem>
+                <br>
+                <FormItem>
+                    <Button type="primary" @click="handleSubmit(formValidate)">Submit</Button>
+                    <Button @click="handleReset(formValidate)" style="margin-left: 8px">Reset</Button>
+                </FormItem>
+            </Form>
+        </div>
+    </div>
 </template>
 <script>
     export default {
@@ -158,4 +169,16 @@
 </script>
 
 <style scoped>
+.login-title {
+    float: left;
+    font-size: 22px;
+    margin-top: 20px;
+    margin-bottom: 15px;
+}
+.container{
+    width: 100%;
+    border: 1px solid;
+    display: flex;
+    margin-bottom: 10px;
+}
 </style>
