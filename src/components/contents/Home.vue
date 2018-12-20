@@ -1,15 +1,15 @@
 <template>
     <Tabs id="tabs" value="name1">
-        <TabPane label="My Detail" name="name1">
+        <TabPane label="My Detail" icon="md-person" name="name1">
             <Info></Info>
         </TabPane>
-        <TabPane label="Favorite Shop List" name="name2">
+        <TabPane label="Favorite Shop List" icon="md-heart" name="name2">
             <WishShop></WishShop>
         </TabPane>
-        <TabPane label="Favorite Product List" name="name3">
+        <TabPane label="Favorite Product List" icon="md-heart" name="name3">
             <WishProduct></WishProduct>
         </TabPane>
-        <TabPane label="Change Password" name="name4">
+        <TabPane label="Change Password" icon="md-build" name="name4">
             <ChangePasswd></ChangePasswd>
         </TabPane>
     </Tabs>
@@ -36,7 +36,7 @@ export default {
 </script>
 <style scoped>
 #tabs {
-    margin-left: 8%;
-    margin-right: 8%;
+    margin-left: 10%;
+    margin-right: 10%;
 }
 </style>

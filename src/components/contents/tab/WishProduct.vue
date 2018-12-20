@@ -12,7 +12,7 @@
                 <a v-for="item in data1" :key="item.id" href="#" class="list-group-item list-group-item-action flex-column align-items-start">
                   <div class="d-flex w-100 justify-content-between">
                       <div style="width:12%;"><img style="height:100px;width:100%;" :src="item.entity.image"/></div>
-                      <div style="width:86%;">
+                      <div style="width:84%;">
                           <div class="d-flex w-100 justify-content-between">
                             <h3 class="mb-1">{{item.entity.name}}</h3>
                             <p>${{item.entity.price}}</p>

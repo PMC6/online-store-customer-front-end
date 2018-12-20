@@ -1,5 +1,10 @@
 <template>
 <div>
+    <!-- <Menu mode="horizontal" style="background:rgb(245, 247, 249);" active-name="1">
+        <MenuItem v-for="item in category" :key="item.id" :name="item.id">
+            {{item.name}}
+        </MenuItem>
+    </Menu> -->
     <div v-if="flag" class="demo-spin-container">
         <Spin fix>
             <Icon type="ios-loading" size=18 class="demo-spin-icon-load"></Icon>
@@ -11,31 +16,31 @@
           <Carousel style="width: 60%;margin: 1% auto;background:#506b9e;" autoplay v-model="value" loop>
             <CarouselItem>
                 <div class="demo-carousel">
-                  <img height="212" width="173" src="http://fenlan96.com/images/1503813706.png" alt="跟阿铭学Linux(第三版) by 李世明" class="grid-product__image">
+                  <img height="312" width="253" src="http://fenlan96.com/images/1503813706.png" alt="跟阿铭学Linux(第三版) by 李世明" class="grid-product__image">
                 </div>
             </CarouselItem>
             <CarouselItem>
                 <div class="demo-carousel">
-                  <img height="212" width="173" src="http://fenlan96.com/images/1503813706.png" alt="跟阿铭学Linux(第三版) by 李世明" class="grid-product__image">
+                  <img height="312" width="253" src="http://fenlan96.com/images/1503813706.png" alt="跟阿铭学Linux(第三版) by 李世明" class="grid-product__image">
                 </div>
             </CarouselItem>
             <CarouselItem>
                 <div class="demo-carousel">
-                  <img height="212" width="173" src="http://fenlan96.com/images/1503813706.png" alt="跟阿铭学Linux(第三版) by 李世明" class="grid-product__image">
+                  <img height="312" width="253" src="http://fenlan96.com/images/1503813706.png" alt="跟阿铭学Linux(第三版) by 李世明" class="grid-product__image">
                 </div>
             </CarouselItem>
             <CarouselItem>
                 <div class="demo-carousel">
-                  <img height="212" width="173" src="http://fenlan96.com/images/1503813706.png" alt="跟阿铭学Linux(第三版) by 李世明" class="grid-product__image">
+                  <img height="312" width="253" src="http://fenlan96.com/images/1503813706.png" alt="跟阿铭学Linux(第三版) by 李世明" class="grid-product__image">
                 </div>
             </CarouselItem>
           </Carousel>
         </div>
         <Divider />
         <div class="container" style="margin-bottom:4%;">
-          <h3 class="h3">
-              <Input required='' @keyup.enter.native="search(pageNum, pageSize)" v-model="searchName" search placeholder="Enter something..."style="width:60%;"/>
-          </h3>
+            <h3 class="h3">
+                <Input required='' @keyup.enter.native="search(pageNum, pageSize)" v-model="searchName" search placeholder="Enter something..."style="width:60%;"/>
+            </h3>
           <div v-if="productList.length == 0" class="demo-spin-container">
               <Spin fix>
                   <Icon type="ios-loading" size=18 class="demo-spin-icon-load"></Icon>
@@ -124,13 +129,15 @@ export default {
     return {
       value: 0, flag: true, modal: false, modal_loading: false,
       productList: [], searchName: '', product: null,
-      pageTotal: 0, pageNum: 1, pageSize: 8
+      pageTotal: 0, pageNum: 1, pageSize: 8,
+      category:[]
     }
   },
   components: {
       'Product': Product
   },
   mounted: function() {
+      this.getCategory()
       this.list(this.pageNum, this.pageSize)
   },
   methods: {
@@ -144,6 +151,11 @@ export default {
         }).catch((err) => {
             console.error(err.response)
         })
+    },
+    getCategory() {
+        this.axios.get('/category')
+        .then((response) => {this.category = response.data.data})
+        .catch((err) => {console.error(err.response)})
     },
     amount() {
         this.axios.get('/amount').then((response) => {

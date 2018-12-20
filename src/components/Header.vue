@@ -3,6 +3,15 @@
     <Menu mode="horizontal" :theme="theme" active-name="1">
         <MenuItem name="1" to="/">
             PARKnSHOP.com
+            <Dropdown style="margin-left: 20px">
+                <a href="javascript:void(0)">
+                    <span style="color:white;">Category</span>
+                    <Icon style="color:white;" type="ios-arrow-down"></Icon>
+                </a>
+                <DropdownMenu slot="list">
+                    <DropdownItem v-for="item in category" :key="item.id">{{item.name}}</DropdownItem>
+                </DropdownMenu>
+            </Dropdown>
         </MenuItem>
         <div v-if="user" style="float:right;">
           <Submenu name="2">
@@ -27,8 +36,11 @@
     export default {
       data () {
         return {
-          theme: 'dark'
+          theme: 'dark', category:[]
         }
+      },
+      mounted: function() {
+          this.getCategory()
       },
       methods: {
           logout() {
@@ -41,7 +53,12 @@
                   this.$router.replace('/login')
                 })
             })
-          }
+        },
+        getCategory() {
+            this.axios.get('/category')
+            .then((response) => {this.category = response.data.data})
+            .catch((err) => {console.error(err.response)})
+        }
         },
         computed: {
           user() {
