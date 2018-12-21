@@ -3,30 +3,30 @@
     <Menu mode="horizontal" :theme="theme" active-name="1">
         <MenuItem name="1" to="/">
             PARKnSHOP.com
-            <Dropdown style="margin-left: 20px">
-                <a href="javascript:void(0)">
-                    <span style="color:white;">Category</span>
-                    <Icon style="color:white;" type="ios-arrow-down"></Icon>
-                </a>
-                <DropdownMenu slot="list">
-                    <DropdownItem v-for="item in category" :key="item.id">{{item.name}}</DropdownItem>
-                </DropdownMenu>
-            </Dropdown>
         </MenuItem>
+        <Submenu name="2">
+            <template slot="title">
+              Category
+            </template>
+            <MenuItem v-for="item in category" :key="item.id" :name="item.id"
+            :to="{path:'/categoryhome', query: {id: item.id}}">
+                {{item.name}}
+            </MenuItem>
+        </Submenu>
         <div v-if="user" style="float:right;">
-          <Submenu name="2">
+          <Submenu name="3">
               <template v-if="user.name" slot="title">
                 {{user.name}}
               </template>
               <MenuItem name="2-1" to="/home">Home</MenuItem>
               <MenuItem name="2-2" @click.native="logout()">Logout</MenuItem>
           </Submenu>
-          <MenuItem name="3" to="/cart">
+          <MenuItem name="4" to="/cart">
             <Icon type="ios-cart" size="24" />
           </MenuItem>
         </div>
         <div v-else style="float:right;">
-          <MenuItem name="2" to="/login">Login / Join</MenuItem>
+          <MenuItem name="3" to="/login">Login / Join</MenuItem>
         </div>
     </Menu>
     <br>

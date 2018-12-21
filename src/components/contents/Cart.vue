@@ -50,6 +50,7 @@
                 this.axios.get('/customer/cart/list').then((response) => {
                     this.data1 = response.data.data
                 }).catch((err) => {
+                    this.data1 = []
                     console.error(err.response)
                 })
             },

@@ -7,6 +7,7 @@ import Register from '@/components/contents/Register'
 import Home from '@/components/contents/Home'
 import Cart from '@/components/contents/Cart'
 import Picture from '@/components/contents/Picture'
+import CategoryHome from '@/components/contents/CategoryHome'
 
 Vue.use(Router)
 
@@ -46,6 +47,11 @@ export default new Router({
         path: '/picture',
         name: 'Picture',
         component: Picture
+    },
+    {
+        path: '/categoryhome',
+        name: 'CategoryHome',
+        component: CategoryHome
     }
   ]
 })
