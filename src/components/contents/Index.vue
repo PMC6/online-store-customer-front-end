@@ -7,7 +7,7 @@
     </Menu> -->
     <div>
         <div>
-          <Carousel style="width: 80%;height: 600px;;margin: 1% auto;background:#506b9e;" autoplay v-model="value" loop>
+          <Carousel style="width: 80%;margin: 1% auto;background:#506b9e;" autoplay v-model="value" loop>
             <CarouselItem>
                 <div class="demo-carousel">
                   <img class="lazyOwl" alt="" src="//img.appfront.fancyecommerce.com/images/en_1.jpg" style="width:100%;">
