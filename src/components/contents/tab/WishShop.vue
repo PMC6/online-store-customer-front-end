@@ -9,7 +9,7 @@
         </div>
         <div class="cart-record">
             <div class="list-group">
-                <a v-for="item in data1" :key="item.id" href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                <a v-for="item in data1" :key="item.id" class="list-group-item list-group-item-action flex-column align-items-start">
                   <div class="d-flex w-100 justify-content-between">
                       <div style="width:12%;"><img style="height:100px;width:100%;" :src="item.entity.image"/></div>
                       <div style="width:86%;">
@@ -55,7 +55,7 @@ export default {
 </script>
 <style scoped>
 .cart-record {
-    width: 60%;
+    width: 80%;
     margin: 0 auto;
 }
 .mb-1 {

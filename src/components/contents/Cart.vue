@@ -11,7 +11,7 @@
         <div v-else>
             <div class="cart-record">
                 <div class="list-group">
-                    <a v-for="item in data1" :key="item.id" href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                    <a v-for="item in data1" :key="item.id" class="list-group-item list-group-item-action flex-column align-items-start">
                       <div class="d-flex w-100 justify-content-between">
                           <div style="width:12%;"><img style="height:100px;width:100%;" :src="item.product.image"/></div>
                           <div style="width:86%;">
@@ -20,6 +20,7 @@
                                 <p>${{item.product.price}}</p>
                               </div>
                               <p class="mb-1">{{item.product.info}}</p>
+                              <p class="mb-1" style="color:red;">{{item.product.number}} left in stock</p>
                               <div class="d-flex w-100 justify-content-between">
                                 <Tag type="border" color="success">{{item.product.shop.name}}</Tag>
                                 <InputNumber @on-change="update(item)" size="small" :max="10" :min="1" v-model="item.number"></InputNumber>

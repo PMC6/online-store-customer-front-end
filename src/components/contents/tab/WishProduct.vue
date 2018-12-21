@@ -9,7 +9,7 @@
         </div>
         <div class="cart-record">
             <div class="list-group">
-                <a v-for="item in data1" :key="item.id" href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                <a v-for="item in data1" :key="item.id" class="list-group-item list-group-item-action flex-column align-items-start">
                   <div class="d-flex w-100 justify-content-between">
                       <div style="width:12%;"><img style="height:100px;width:100%;" :src="item.entity.image"/></div>
                       <div style="width:84%;">
@@ -18,9 +18,13 @@
                             <p>${{item.entity.price}}</p>
                           </div>
                           <p class="mb-1">{{item.entity.info}}</p>
+                          <p class="mb-1" style="color:red;">{{item.entity.number}} left in stock</p>
                           <div class="d-flex w-100 justify-content-between">
                               <p class="mb-1"><Tag type="border" color="success">{{item.entity.shop.name}}</Tag></p>
-                              <p style="text-align:right;"><Button @click="remove(item)" size="small" type="error">delete</Button></p>
+                              <p style="text-align:right;">
+                                  <Button @click="addToCart(item)" size="small" type="primary">add to cart</Button>
+                                  <Button @click="remove(item)" size="small" type="error">delete</Button>
+                              </p>
                           </div>
                       </div>
                   </div>
@@ -49,8 +53,16 @@ export default {
                 console.error(err.response)
             })
         },
+        addToCart(item) {
+            this.axios.post('/customer/cart/add', {id:item.entity.id, number:1})
+            .then((response) => {this.$Notice.success({
+                title: 'Successful', desc: 'Add one product in your cart'
+            })})
+            .catch((err) => {this.$Notice.error({
+                title: 'Failed', desc: 'Please login this system'
+            })})
+        },
         remove(item) {
-            console.log(item)
             this.axios.delete('/customer/favorite/delete', {params: {id:item.id}})
             .then((response) => {this.list()}).catch((err) => {console.error(err)})
         }
@@ -59,7 +71,7 @@ export default {
 </script>
 <style scoped>
 .cart-record {
-    width: 60%;
+    width: 80%;
     margin: 0 auto;
 }
 .mb-1 {
