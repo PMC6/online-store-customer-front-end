@@ -181,9 +181,17 @@ import qs from 'qs'
                 .then((response) => {this.$Notice.success({
                     title: 'Successful', desc: 'Add one product in your cart'
                 })})
-                .catch((err) => {this.$Notice.error({
-                    title: 'Failed', desc: 'Please login this system'
-                })})
+                .catch((err) => {
+                    if (err.response) {
+                        this.$Notice.error({
+                            title: 'Failed', desc: err.response.data.message
+                        })
+                    } else {
+                        this.$Notice.error({
+                            title: 'Failed', desc: 'Please login this system'
+                        })
+                    }
+                })
             },
             addShop() {
                 this.axios.post('/customer/favorite/add', {id:this.product.shop.id, type:1})

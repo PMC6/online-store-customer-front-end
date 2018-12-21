@@ -23,7 +23,7 @@
                               <p class="mb-1" style="color:red;">{{item.product.number}} left in stock</p>
                               <div class="d-flex w-100 justify-content-between">
                                 <Tag type="border" color="success">{{item.product.shop.name}}</Tag>
-                                <InputNumber @on-change="update(item)" size="small" :max="10" :min="1" v-model="item.number"></InputNumber>
+                                <InputNumber @on-change="update(item)" size="small" :max="item.product.number" :min="1" v-model="item.number"></InputNumber>
                                 <p style="color:#19be6b;">Total： ${{item.number * item.product.price}}</p>
                               </div>
                               <p style="text-align:right;"><Button @click="remove(item)" size="small" type="error">delete</Button></p>
