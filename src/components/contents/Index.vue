@@ -7,7 +7,7 @@
     </Menu> -->
     <div>
         <div>
-          <Carousel style="width: 80%;margin: 1% auto;background:#506b9e;" autoplay autoplay-speed="4000" v-model="value" loop>
+          <Carousel style="width: 80%;margin: 1% auto;background:#506b9e;" autoplay v-model="value" loop>
             <CarouselItem>
                 <div class="demo-carousel">
                   <img @click="imageClick(1)" class="lazyOwl" alt=""
@@ -47,7 +47,7 @@
             </Spin>
         </div>
         <div class="row">
-          <div v-for="item in productList" class="col-md-3 col-sm-6" @click="clickEvent(item)">
+          <div v-for="item in productList" class="col-md-3 col-sm-6" @click="clickEvent(item.product)">
               <div class="product-grid9">
                   <div class="product-image9">
                       <a v-if="item.image">
@@ -58,8 +58,8 @@
                       </a>
                   </div>
                   <div class="product-content">
-                      <h3 class="title">{{item.name}}</h3>
-                      <div class="price">$ {{item.price}}</div>
+                      <h3 class="title">{{item.product.name}}</h3>
+                      <div class="price">$ {{item.product.price}}</div>
                   </div>
               </div>
           </div>
@@ -136,9 +136,7 @@ export default {
   methods: {
       list() {
           this.productList = []
-          axios.get('/list', { params: {
-              'page': 0,'size': 10}
-          }).then((response) => {
+          axios.get('/advertisement/product/list').then((response) => {
               this.productList = response.data.data
               this.flag = false
           }).catch((err) => {
