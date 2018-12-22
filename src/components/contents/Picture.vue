@@ -4,7 +4,8 @@
             style="width:50%;margin: 0 auto;"
             type="drag"
             name="name"
-            action="http://localhost:8080/advertisement/upload">
+            :on-success="handleSuccess"
+            action="http://39.98.165.19:8080/advertisement/upload">
             <div style="padding: 20px 0">
                 <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
                 <p>Click or drag files here to upload</p>
@@ -15,7 +16,16 @@
 
 <script>
     export default {
+        data() {
+            return {
 
+            }
+        },
+        methods: {
+            handleSuccess (res, file) {
+                console.log(res, file)
+            }
+        }
     }
 </script>
 
