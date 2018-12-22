@@ -12,6 +12,15 @@ export default {
   components: {
     'layout': layout
   },
+  mounted: function() {
+  },
+  methods: {
+      query() {
+          this.axios.get('/user/auth', {params: {username:'fenlan'}})
+          .then((response) => {console.log(response)})
+          .catch((err) => {console.error(err.response)})
+      }
+  }
 }
 </script>
 

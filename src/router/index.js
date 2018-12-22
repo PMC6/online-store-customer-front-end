@@ -8,6 +8,7 @@ import Home from '@/components/contents/Home'
 import Cart from '@/components/contents/Cart'
 import Picture from '@/components/contents/Picture'
 import CategoryHome from '@/components/contents/CategoryHome'
+import ShopPage from '@/components/contents/ShopPage'
 
 Vue.use(Router)
 
@@ -52,6 +53,11 @@ export default new Router({
         path: '/categoryhome',
         name: 'CategoryHome',
         component: CategoryHome
+    },
+    {
+        path: '/shop',
+        name: 'ShopPage',
+        component: ShopPage
     }
   ]
 })

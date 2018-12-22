@@ -10,28 +10,31 @@
           <Carousel style="width: 80%;margin: 1% auto;background:#506b9e;" autoplay v-model="value" loop>
             <CarouselItem>
                 <div class="demo-carousel">
-                  <img class="lazyOwl" alt="" src="//img.appfront.fancyecommerce.com/images/en_1.jpg" style="width:100%;">
+                  <img @click="imageClick(1)" class="lazyOwl" alt=""
+                  src="//img.appfront.fancyecommerce.com/images/en_1.jpg" style="width:100%;cursor: pointer;">
                 </div>
             </CarouselItem>
             <CarouselItem>
                 <div class="demo-carousel">
-                  <img class="lazyOwl" alt="" style="" src="//img.appfront.fancyecommerce.com/images/en_2.jpg" style="width:100%;">
+                  <img @click="imageClick(1)" class="lazyOwl" alt=""
+                  src="//img.appfront.fancyecommerce.com/images/en_2.jpg" style="width:100%;cursor: pointer;">
                 </div>
             </CarouselItem>
             <CarouselItem>
                 <div class="demo-carousel">
-                  <img class="lazyOwl" alt="" style="" src="//img.appfront.fancyecommerce.com/images/en_3.jpg" style="width:100%;">
+                  <img @click="imageClick(1)" class="lazyOwl" alt=""
+                  src="//img.appfront.fancyecommerce.com/images/en_3.jpg" style="width:100%;cursor: pointer;">
                 </div>
             </CarouselItem>
           </Carousel>
           <Row class="advertisement">
               <Col span="12">
-                  <img class="js_lazy" data-original="//img.appfront.fancyecommerce.com/images/en_a.jpg"
-                  src="//img.appfront.fancyecommerce.com/images/en_a.jpg" alt="" width="100%" style="">
+                  <img @click="imageClick(1)" class="js_lazy" data-original="//img.appfront.fancyecommerce.com/images/en_a.jpg"
+                  src="//img.appfront.fancyecommerce.com/images/en_a.jpg" alt="" width="100%" style="cursor: pointer;">
               </Col>
               <Col span="12">
-                  <img class="js_lazy" data-original="//img.appfront.fancyecommerce.com/images/sammy.jpg"
-                  src="//img.appfront.fancyecommerce.com/images/sammy.jpg" alt="" width="100%" style="">
+                  <img @click="imageClick(1)" class="js_lazy" data-original="//img.appfront.fancyecommerce.com/images/sammy.jpg"
+                  src="//img.appfront.fancyecommerce.com/images/sammy.jpg" alt="" width="100%" style="cursor: pointer;">
               </Col>
           </Row>
         </div>
@@ -148,6 +151,9 @@ export default {
       clickEvent(product) {
           this.modal = true
           this.product = product
+      },
+      imageClick(id) {
+          this.$router.replace({path:'/shop', query: {'id': id}})
       },
       addToCart() {
           this.axios.post('/customer/cart/add', {id:this.product.id, number:1})
