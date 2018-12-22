@@ -10,35 +10,51 @@
           <Carousel style="width: 80%;margin: 1% auto;background:#506b9e;" autoplay :autoplay-speed="speed" v-model="value" loop>
             <CarouselItem>
                 <div v-if="shop[0]" class="demo-carousel">
-                  <img @click="imageClick(shop[0].shop.id)" class="lazyOwl" alt=""
+                  <img class="lazyOwl" alt="" @click="imageClick(shop[0].shop.id)"
                   src="//img.appfront.fancyecommerce.com/images/en_1.jpg" style="width:100%;cursor: pointer;">
                 </div>
                 <div v-else class="demo-carousel">
-                  <img @click="imageClick(1)" class="lazyOwl" alt=""
-                  src="//img.appfront.fancyecommerce.com/images/en_1.jpg" style="width:100%;cursor: pointer;">
+                  <img class="lazyOwl" alt=""
+                  src="//img.appfront.fancyecommerce.com/images/en_1.jpg" style="width:100%;">
                 </div>
             </CarouselItem>
             <CarouselItem>
-                <div class="demo-carousel">
-                  <img @click="imageClick(1)" class="lazyOwl" alt=""
+                <div v-if="shop[1]" class="demo-carousel">
+                  <img @click="imageClick(shop[1].shop.id)" class="lazyOwl" alt=""
                   src="//img.appfront.fancyecommerce.com/images/en_2.jpg" style="width:100%;cursor: pointer;">
                 </div>
+                <div v-else class="demo-carousel">
+                  <img class="lazyOwl" alt=""
+                  src="//img.appfront.fancyecommerce.com/images/en_2.jpg" style="width:100%;">
+                </div>
             </CarouselItem>
             <CarouselItem>
-                <div class="demo-carousel">
-                  <img @click="imageClick(1)" class="lazyOwl" alt=""
+                <div v-if="shop[2]" class="demo-carousel">
+                  <img @click="imageClick(shop[2].shop.id)" class="lazyOwl" alt=""
                   src="//img.appfront.fancyecommerce.com/images/en_3.jpg" style="width:100%;cursor: pointer;">
+                </div>
+                <div v-else class="demo-carousel">
+                  <img class="lazyOwl" alt=""
+                  src="//img.appfront.fancyecommerce.com/images/en_3.jpg" style="width:100%;">
                 </div>
             </CarouselItem>
           </Carousel>
           <Row class="advertisement">
               <Col span="12">
-                  <img @click="imageClick(1)" class="js_lazy" data-original="//img.appfront.fancyecommerce.com/images/en_a.jpg"
+                  <img v-if="shop[3]" @click="imageClick(shop[3].shop.id)" class="js_lazy"
+                  data-original="//img.appfront.fancyecommerce.com/images/en_a.jpg"
                   src="//img.appfront.fancyecommerce.com/images/en_a.jpg" alt="" width="100%" style="cursor: pointer;">
+                  <img v-else class="js_lazy"
+                  data-original="//img.appfront.fancyecommerce.com/images/en_a.jpg"
+                  src="//img.appfront.fancyecommerce.com/images/en_a.jpg" alt="" width="100%"">
               </Col>
               <Col span="12">
-                  <img @click="imageClick(1)" class="js_lazy" data-original="//img.appfront.fancyecommerce.com/images/sammy.jpg"
+                  <img v-if="shop[4]" @click="imageClick(shop[4].shop.id)" class="js_lazy"
+                  data-original="//img.appfront.fancyecommerce.com/images/en_a.jpg"
                   src="//img.appfront.fancyecommerce.com/images/sammy.jpg" alt="" width="100%" style="cursor: pointer;">
+                  <img v-else class="js_lazy"
+                  data-original="//img.appfront.fancyecommerce.com/images/en_a.jpg"
+                  src="//img.appfront.fancyecommerce.com/images/sammy.jpg" alt="" width="100%"">
               </Col>
           </Row>
         </div>
