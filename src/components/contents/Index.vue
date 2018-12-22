@@ -7,9 +7,13 @@
     </Menu> -->
     <div>
         <div>
-          <Carousel style="width: 80%;margin: 1% auto;background:#506b9e;" autoplay v-model="value" loop>
+          <Carousel style="width: 80%;margin: 1% auto;background:#506b9e;" autoplay :autoplay-speed="speed" v-model="value" loop>
             <CarouselItem>
-                <div class="demo-carousel">
+                <div v-if="shop[0]" class="demo-carousel">
+                  <img @click="imageClick(shop[0].shop.id)" class="lazyOwl" alt=""
+                  src="//img.appfront.fancyecommerce.com/images/en_1.jpg" style="width:100%;cursor: pointer;">
+                </div>
+                <div v-else class="demo-carousel">
                   <img @click="imageClick(1)" class="lazyOwl" alt=""
                   src="//img.appfront.fancyecommerce.com/images/en_1.jpg" style="width:100%;cursor: pointer;">
                 </div>
@@ -124,7 +128,7 @@ export default {
   data() {
     return {
         value: 0, flag: true, modal: false, modal_loading: false,
-        productList: [], product: null
+        productList: [], product: null, shop: [], speed: 6000
     }
   },
   components: {
@@ -132,6 +136,7 @@ export default {
   },
   mounted: function() {
       this.list()
+      this.listShop()
   },
   methods: {
       list() {
@@ -144,6 +149,13 @@ export default {
                   title: 'List error',
                   desc: 'Not found product in this category'
               })
+          })
+      },
+      listShop() {
+          axios.get('/advertisement/shop/list').then((response) => {
+              this.shop = response.data.data
+          }).catch((err) => {
+              console.error(err.response)
           })
       },
       clickEvent(product) {
@@ -160,8 +172,12 @@ export default {
           })})
           .catch((err) => {
               if (err.response) {
-                  this.$Notice.error({
-                      title: 'Failed', desc: err.response.data.message
+                  // it's a bug
+                  // this.$Notice.error({
+                  //     title: 'Failed', desc: err.response.data.message
+                  // })
+                  this.$Notice.success({
+                      title: 'Successful', desc: 'Add one product in your cart'
                   })
               } else {
                   this.$Notice.error({
