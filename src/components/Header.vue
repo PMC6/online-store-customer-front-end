@@ -14,6 +14,9 @@
             </MenuItem>
         </Submenu>
         <div v-if="user" style="float:right;">
+            <MenuItem name="4" to="/cart">
+              <Icon type="ios-cart" size="24" />
+            </MenuItem>
           <Submenu name="3">
               <template v-if="user.name" slot="title">
                 {{user.name}}
@@ -21,9 +24,6 @@
               <MenuItem name="2-1" to="/home">Home</MenuItem>
               <MenuItem name="2-2" @click.native="logout()">Logout</MenuItem>
           </Submenu>
-          <MenuItem name="4" to="/cart">
-            <Icon type="ios-cart" size="24" />
-          </MenuItem>
         </div>
         <div v-else style="float:right;">
           <MenuItem name="3" to="/login">Login / Join</MenuItem>
