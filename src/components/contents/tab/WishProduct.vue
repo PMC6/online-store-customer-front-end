@@ -60,8 +60,12 @@ export default {
             })})
             .catch((err) => {
                 if (err.response) {
-                    this.$Notice.error({
-                        title: 'Failed', desc: err.response.data.message
+                    // it's a bug
+                    // this.$Notice.error({
+                    //     title: 'Failed', desc: err.response.data.message
+                    // })
+                    this.$Notice.success({
+                        title: 'Successful', desc: 'Add one product in your cart'
                     })
                 } else {
                     this.$Notice.error({

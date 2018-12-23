@@ -60,12 +60,6 @@
         </div>
         <p class="login-title">FEATURED PRODUCTS</p>
         <Divider class="divider" />
-        <div v-if="productList.length == 0" class="demo-spin-container">
-            <Spin fix>
-                <Icon type="ios-loading" size=18 class="demo-spin-icon-load"></Icon>
-                <div>Loading</div>
-            </Spin>
-        </div>
         <div class="row">
           <div v-for="item in productList" class="col-md-3 col-sm-6" @click="clickEvent(item.product)">
               <div class="product-grid9">
