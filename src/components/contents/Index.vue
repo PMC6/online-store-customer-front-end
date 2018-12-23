@@ -7,7 +7,7 @@
     </Menu> -->
     <div>
         <div>
-          <Carousel style="width: 80%;margin: 1% auto;background:#506b9e;" autoplay :autoplay-speed="speed" v-model="value" loop>
+          <Carousel style="width: 80%;margin: 1% auto;background:#506b9e;" autoplay :autoplay-speed="speed" v-model="value">
             <CarouselItem>
                 <div v-if="shop[0]" class="demo-carousel">
                   <img class="lazyOwl" alt="" @click="imageClick(shop[0].shop.id)"
