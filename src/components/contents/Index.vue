@@ -53,7 +53,7 @@
                         <img class="pic-1" src="http://bestjquery.com/tutorial/product-grid/demo6/images/img-1.jpg">
                       </a>
                   </div>
-                  <div class="product-content">
+                  <div v-if="item.product" class="product-content">
                       <h3 class="title">{{item.product.name}}</h3>
                       <div class="price">$ {{item.product.price}}</div>
                   </div>
