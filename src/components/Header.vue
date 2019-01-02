@@ -2,7 +2,8 @@
   <div>
     <Menu mode="horizontal" :theme="theme" active-name="1">
         <MenuItem name="1" to="/">
-            PARKnSHOP.com
+            <!-- PARKnSHOP.com -->
+            <img style="width:160px;height:40px;" src="http://39.98.165.19:8084/static/image/1545666685959Screenshot from 2018-12-24 23-50-07.png" />
         </MenuItem>
         <Submenu name="2">
             <template slot="title">
