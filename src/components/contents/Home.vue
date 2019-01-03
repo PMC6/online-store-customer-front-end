@@ -9,7 +9,10 @@
         <TabPane label="Favorite Product List" icon="md-heart" name="name3">
             <WishProduct></WishProduct>
         </TabPane>
-        <TabPane label="Change Password" icon="md-build" name="name4">
+        <TabPane label="Order Detail" icon="md-information-circle" name="name4">
+            <OrderDetail></OrderDetail>
+        </TabPane>
+        <TabPane label="Change Password" icon="md-build" name="name5">
             <ChangePasswd></ChangePasswd>
         </TabPane>
     </Tabs>
@@ -18,6 +21,7 @@
 import Info from './tab/Info'
 import WishShop from './tab/WishShop'
 import WishProduct from './tab/WishProduct'
+import OrderDetail from './tab/OrderDetail'
 import ChangePasswd from './tab/ChangePasswd'
 
 export default {
@@ -30,6 +34,7 @@ export default {
         'Info': Info,
         'WishShop': WishShop,
         'WishProduct': WishProduct,
+        'OrderDetail': OrderDetail,
         'ChangePasswd': ChangePasswd
     }
 }

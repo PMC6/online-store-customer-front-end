@@ -46,31 +46,63 @@
                 <span>{{product.name}}</span>
             </p>
             <div style="text-align:center">
-                <Row>
-                    <Col span="12">
-                        <a v-if="product.image">
-                            <img style="width:150px;height:190px;" class="pic-1" v-bind:src="product.image">
-                        </a>
-                        <a v-else>
-                          <img style="width:150px;height:190px;" class="pic-1" src="http://bestjquery.com/tutorial/product-grid/demo6/images/img-1.jpg">
-                        </a>
-                    </Col>
-                    <Col span="12" align="left">
-                        <p v-if="product.category" style="font-size:18px;">
-                            <Icon type="md-pricetags" /> {{product.category.name}}
+                <div v-if="!commentFlag">
+                    <Row>
+                        <Col span="12">
+                            <a v-if="product.image">
+                                <img style="width:150px;height:190px;" class="pic-1" v-bind:src="product.image">
+                            </a>
+                            <a v-else>
+                              <img style="width:150px;height:190px;" class="pic-1" src="http://bestjquery.com/tutorial/product-grid/demo6/images/img-1.jpg">
+                            </a>
+                        </Col>
+                        <Col span="12" align="left">
+                            <p v-if="product.category" style="font-size:18px;">
+                                <Icon type="md-pricetags" /> {{product.category.name}}
+                                <Divider />
+                            </p>
+                            <p v-if="product.shop.name" style="font-size:18px;">
+                                <Icon v-if="product.shop.name" type="ios-appstore" /> {{product.shop.name}}
+                                <Button @click="addShop()" type="success" shape="circle" size="small"><Icon type="ios-heart" /></Button>
+                            </p>
                             <Divider />
-                        </p>
-                        <p v-if="product.shop.name" style="font-size:18px;">
-                            <Icon v-if="product.shop.name" type="ios-appstore" /> {{product.shop.name}}
-                            <Button @click="addShop()" type="success" shape="circle" size="small"><Icon type="ios-heart" /></Button>
-                        </p>
-                        <Divider />
-                        <p v-if="product.info"><Icon type="md-attach" size="18" /> {{product.info}}</p>
-                        <p style="font-size:16px;color:#ed4014;"><Icon type="md-attach" size="18" />{{product.number}} left in stock</p>
-                        <Divider />
-                        <p v-if="product.price" style="font-size:32px;bottom:0;">$ {{product.price}}</p>
-                    </Col>
-                </Row>
+                            <p v-if="product.info"><Icon type="md-attach" size="18" /> {{product.info}}</p>
+                            <p style="font-size:16px;color:#ed4014;"><Icon type="md-attach" size="18" />{{product.number}} left in stock</p>
+                            <Divider />
+                            <p v-if="product.price" style="font-size:32px;bottom:0;">$ {{product.price}}</p>
+                        </Col>
+                    </Row>
+                    <Divider />
+                </div>
+                <a style="font-size:16px;color:#ed4014;" @click="showComments()">User comments</a>
+                <div v-if="commentFlag">
+                    <br>
+                    <div class="cart-record">
+                        <div class="list-group">
+                            <div style="border-bottom: 1px solid #e9e9e9;padding-bottom:6px;margin-bottom:6px;">
+                            <div v-if="comments.length == 0"> Don't have any comment</div>
+                            <div v-else style="height:80%;overflowY:scroll">
+                                <a v-for="item in comments" :key="item.id" class="list-group-item list-group-item-action flex-column align-items-start">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <div style="width:12%;">
+                                            <img style="height:75px;width:100%;"
+                                            src="http://www.twwd.org/dashboard/wp-content/uploads/2014/08/avatar-circle-human-male-2-512.png"/>
+                                        </div>
+                                        <div style="width:86%;">
+                                            <div class="d-flex w-100 justify-content-between">
+                                              <h3 class="mb-1">{{item.userName}}</h3>
+                                              <Rate disabled v-model="item.grade" />
+                                              <p>{{item.createTime}}</p>
+                                            </div>
+                                            <p class="mb-1">{{item.productComment}}</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                </div>
             </div>
             <div slot="footer">
                 <Row style="text-align:center;">
@@ -97,9 +129,9 @@ import qs from 'qs'
     export default {
         data() {
             return {
-                flag: true, modal: false, modal_loading: false,
+                flag: true, modal: false, modal_loading: false, commentFlag: false,
                 productList: [], searchName: '', product: null,
-                pageTotal: 0, pageNum: 1, pageSize: 8,
+                pageTotal: 0, pageNum: 1, pageSize: 8, comments: []
             }
         },
         computed: {
@@ -168,6 +200,7 @@ import qs from 'qs'
             clickEvent(product) {
                 this.modal = true
                 this.product = product
+                this.comment()
             },
             handlePage(data) {
                 this.pageNum = data
@@ -223,6 +256,20 @@ import qs from 'qs'
                 })}).catch((err) => {this.$Notice.error({
                     title: 'Failed', desc: 'Please login this system'
                 })})
+            },
+            comment() {
+                this.comments = []
+                this.commentFlag = false
+                this.axios.get('/comment/list', {
+                    params: { productId: this.product.id }
+                }).then((response) => {
+                    this.comments = response.data.data
+                }).catch((err) => {
+                    console.error(err)
+                })
+            },
+            showComments() {
+                this.commentFlag = !this.commentFlag
             }
         }
     }

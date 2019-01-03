@@ -9,74 +9,45 @@
             </p>
         </div>
         <div v-else>
-            <div class="cart-record">
-                <div class="list-group">
-                    <div style="border-bottom: 1px solid #e9e9e9;padding-bottom:6px;margin-bottom:6px;">
-                    <a v-for="item in data1" :key="item.id" class="list-group-item list-group-item-action flex-column align-items-start">
-                      <div class="d-flex w-100 justify-content-between">
-                          <div style="width:12%;">
-                              <input type="checkbox" name="cbox" id="" v-model="item.checked">
-                              <img style="height:100px;width:100%;" :src="item.product.image"/>
-                          </div>
-                          <div style="width:86%;">
-                              <div class="d-flex w-100 justify-content-between">
-                                <h3 class="mb-1">{{item.product.name}}</h3>
-                                <p>${{item.product.price}}</p>
-                              </div>
-                              <p class="mb-1">{{item.product.info}}</p>
-                              <p class="mb-1" style="color:red;">{{item.product.number}} left in stock</p>
-                              <div class="d-flex w-100 justify-content-between">
-                                <Tag type="border" color="success">{{item.product.shop.name}}</Tag>
-                                <InputNumber @on-change="update(item)" size="small" :max="item.product.number" :min="1" v-model="item.number"></InputNumber>
-                                <p style="color:#19be6b;">Total： ${{item.number * item.product.price}}</p>
-                              </div>
-                              <p style="text-align:right;"><Button @click="remove(item)" size="small" type="error">delete</Button></p>
-                          </div>
+            <div style="border-bottom: 1px solid #e9e9e9;padding-bottom:6px;margin-bottom:6px;">
+            <Checkbox
+            :indeterminate="indeterminate"
+            :value="checkAll"
+            @click.prevent.native="handleCheckAll">全选</Checkbox>
+            </div>
+            <CheckboxGroup v-model="checkAllGroup" @on-change="checkAllGroupChange">
+                <div class="cart-record">
+                    <div class="list-group">
+                        <div style="border-bottom: 1px solid #e9e9e9;padding-bottom:6px;margin-bottom:6px;">
+                        <a v-for="item in data1" :key="item.id" class="list-group-item list-group-item-action flex-column align-items-start">
+                            <Checkbox :label="item">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <div style="width:12%;">
+                                        <img style="height:100px;width:100%;" :src="item.product.image"/>
+                                    </div>
+                                    <div style="width:86%;">
+                                        <div class="d-flex w-100 justify-content-between">
+                                          <h3 class="mb-1">{{item.product.name}}</h3>
+                                          <p>${{item.product.price}}</p>
+                                        </div>
+                                        <p class="mb-1">{{item.product.info}}</p>
+                                        <p class="mb-1" style="color:red;">{{item.product.number}} left in stock</p>
+                                        <div class="d-flex w-100 justify-content-between">
+                                          <Tag type="border" color="success">{{item.product.shop.name}}</Tag>
+                                          <InputNumber @on-change="update(item)" size="small" :max="item.product.number" :min="1" v-model="item.number"></InputNumber>
+                                          <p style="color:#19be6b;">Total： ${{item.number * item.product.price}}</p>
+                                        </div>
+                                        <p style="text-align:right;"><Button @click="remove(item)" size="small" type="error">delete</Button></p>
+                                    </div>
+                                </div>
+                            </Checkbox><br>
+                        </a>
+                        <p class="total-price"><Tag type="dot">Total： ${{total}}</Tag><Button type="primary" @click="showmodal()">Checkout</Button></p>
                       </div>
-                    </a>
-                    <p class="total-price"><Tag type="dot">Total： ${{total}}</Tag><Button type="primary" @click="showmodal()">Checkout</Button></p>
                   </div>
-              </div>
-            </div>
+                </div>
+            </CheckboxGroup>
         </div>
-        <div style="border-bottom: 1px solid #e9e9e9;padding-bottom:6px;margin-bottom:6px;">
-        <Checkbox
-        :indeterminate="indeterminate"
-        :value="checkAll"
-        @click.prevent.native="handleCheckAll">全选</Checkbox>
-        </div>
-        <CheckboxGroup v-model="checkAllGroup" @on-change="checkAllGroupChange">
-            <div class="cart-record">
-                <div class="list-group">
-                    <div style="border-bottom: 1px solid #e9e9e9;padding-bottom:6px;margin-bottom:6px;">
-                    <a v-for="item in data1" :key="item.id" class="list-group-item list-group-item-action flex-column align-items-start">
-                        <Checkbox :label="item">
-                            <div class="d-flex w-100 justify-content-between">
-                                <div style="width:12%;">
-                                    <img style="height:100px;width:100%;" :src="item.product.image"/>
-                                </div>
-                                <div style="width:86%;">
-                                    <div class="d-flex w-100 justify-content-between">
-                                      <h3 class="mb-1">{{item.product.name}}</h3>
-                                      <p>${{item.product.price}}</p>
-                                    </div>
-                                    <p class="mb-1">{{item.product.info}}</p>
-                                    <p class="mb-1" style="color:red;">{{item.product.number}} left in stock</p>
-                                    <div class="d-flex w-100 justify-content-between">
-                                      <Tag type="border" color="success">{{item.product.shop.name}}</Tag>
-                                      <InputNumber @on-change="update(item)" size="small" :max="item.product.number" :min="1" v-model="item.number"></InputNumber>
-                                      <p style="color:#19be6b;">Total： ${{item.number * item.product.price}}</p>
-                                    </div>
-                                    <p style="text-align:right;"><Button @click="remove(item)" size="small" type="error">delete</Button></p>
-                                </div>
-                            </div>
-                        </Checkbox><br>
-                    </a>
-                    <p class="total-price"><Tag type="dot">Total： ${{total}}</Tag><Button type="primary" @click="showmodal()">Checkout</Button></p>
-                  </div>
-              </div>
-            </div>
-        </CheckboxGroup>
         <Modal v-if="data1"
                v-model="modalshow"
                title="Confirm your order"
@@ -84,7 +55,7 @@
                cancel-text="cancel"
                ok-text="ok"
                @on-ok="ok">
-               <div v-for="item in data1" v-if="item.checked" class="list-group-item list-group-item-action flex-column align-items-start">
+               <div v-for="item in checkAllGroup" class="list-group-item list-group-item-action flex-column align-items-start">
                    <div class="d-flex w-100 justify-content-between">
                        <div style="width:12%;">
                            <img style="height:100px;width:100%;" :src="item.product.image"/>
@@ -114,7 +85,8 @@
             return {
                 data1: [], modalshow: false,
                 indeterminate: true,
-                checkAll: false
+                checkAll: false,
+                checkAllGroup: []
             }
         },
         mounted: function() {
@@ -145,60 +117,56 @@
                 this.modalshow=true
             },
             ok() {
-                for (var i = 0; i < this.data1.length; i++) {
-                    if (this.data1[i].checked) {
-                        this.axios.post('/customer/order/add',{
-                            "shopName":this.data1[i].product.shop.name,
-                            "productName":this.data1[i].product.name,
-                            "number":this.data1[i].product.number
-                        }).then(response=>{
-                            this.$Notice.success({
-                            title: 'Successful', desc: 'commit your order to shop seller'
-                        })
+                for (var i = 0; i < this.checkAllGroup.length; i++) {
+                    this.axios.post('/customer/order/add',{
+                        "shopName":this.data1[i].product.shop.name,
+                        "productName":this.data1[i].product.name,
+                        "number":this.data1[i].number
+                    }).then(response=>{
+                        this.list()
+                        this.$Notice.success({
+                        title: 'Successful', desc: 'commit your order to shop seller'
+                    })
 
-                        }).catch(error=>{
-                            console.log(error)
-                        })
-                    }
+                    }).catch(error=>{
+                        console.log(error)
+                    })
                 }
             },
             handleCheckAll () {
                 if (this.indeterminate) {
-                    this.checkAll = false;
+                    this.checkAll = false
                 } else {
-                    this.checkAll = !this.checkAll;
+                    this.checkAll = !this.checkAll
                 }
-                this.indeterminate = false;
+                this.indeterminate = false
 
                 if (this.checkAll) {
-                    this.checkAllGroup = ['香蕉', '苹果', '西瓜'];
+                    this.checkAllGroup = this.data1
                 } else {
-                    this.checkAllGroup = [];
+                    this.checkAllGroup = []
                 }
             },
             checkAllGroupChange (data) {
-                if (data.length === 3) {
-                    this.indeterminate = false;
-                    this.checkAll = true;
+                if (data.length === this.data1.length) {
+                    this.indeterminate = false
+                    this.checkAll = true
                 } else if (data.length > 0) {
-                    this.indeterminate = true;
-                    this.checkAll = false;
+                    this.indeterminate = true
+                    this.checkAll = false
                 } else {
-                    this.indeterminate = false;
-                    this.checkAll = false;
+                    this.indeterminate = false
+                    this.checkAll = false
                 }
+                console.log(this.checkAllGroup)
             }
         },
         computed: {
             total() {
                 var tmp = 0
-                for (var i = 0; i < this.data1.length; i++)
-                    if(this.data1[i].checked)
-                        tmp += this.data1[i].number * this.data1[i].product.price
+                for (var i = 0; i < this.checkAllGroup.length; i++)
+                    tmp += this.checkAllGroup[i].number * this.checkAllGroup[i].product.price
                 return tmp
-            },
-            checkAllGroup() {
-                return this.data1
             }
         }
     }
