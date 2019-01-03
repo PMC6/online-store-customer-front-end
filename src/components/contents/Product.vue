@@ -13,14 +13,21 @@
             </Spin>
         </div>
         <div class="row">
-          <div v-for="item in productList" class="col-md-3 col-sm-6" @click="clickEvent(item)">
+          <div v-for="item in productList" class="col-md-3 col-sm-6">
               <div class="product-grid9">
                   <div class="product-image9">
                       <a v-if="item.image">
-                          <img class="pic-1" v-bind:src="item.image">
+                          <img class="pic-1" v-bind:src="item.image" >
                       </a>
                       <a v-else>
                         <img class="pic-1" src="http://bestjquery.com/tutorial/product-grid/demo6/images/img-1.jpg">
+                      </a>
+                      <a>
+                          <ul class="social">
+                              <li @click="clickEvent(item)"><Icon type="ios-search" /></li>
+                              <li @click="addProduct(item)"><Icon type="ios-heart-outline" /></li>
+                              <li @click="addToCart(item)"><Icon type="ios-cart-outline" /></li>
+                          </ul>
                       </a>
                   </div>
                   <div class="product-content">
@@ -176,7 +183,9 @@ import qs from 'qs'
                 else
                     this.list(this.pageNum, this.pageSize)
             },
-            addToCart() {
+            addToCart(data) {
+                if (data != null)
+                    this.product = data
                 this.axios.post('/customer/cart/add', {id:this.product.id, number:1})
                 .then((response) => {this.$Notice.success({
                     title: 'Successful', desc: 'Add one product in your cart'
@@ -197,7 +206,7 @@ import qs from 'qs'
                     }
                 })
             },
-            addShop() {
+            addShop(data) {
                 this.axios.post('/customer/favorite/add', {id:this.product.shop.id, type:1})
                 .then((response) => {this.$Notice.success({
                     title: 'Successful', desc: 'Add one shop in your WishList'
@@ -205,7 +214,9 @@ import qs from 'qs'
                     title: 'Failed', desc: 'Please login this system'
                 })})
             },
-            addProduct() {
+            addProduct(data) {
+                if (data != null)
+                    this.product = data
                 this.axios.post('/customer/favorite/add', {id:this.product.id, type:3})
                 .then((response) => {this.$Notice.success({
                     title: 'Successful', desc: 'Add one product in your WishList'
@@ -234,6 +245,14 @@ h3.h3{text-align:center;margin:1em;text-transform:capitalize;font-size:1.7em;}
 .product-grid9:hover .price{color:#2b85e4}
 .product-grid9 .add-to-cart{display:block;color:#c0392b;font-weight:600;font-size:14px;opacity:0;position:absolute;left:10px;bottom:-20px;transition:all .5s ease 0s}
 .product-grid9:hover .add-to-cart{opacity:1;bottom:0}
+.product-grid9 .social{width:150px;padding:0;margin:0;list-style:none;opacity:0;transform:translateY(-50%) translateX(-50%);position:absolute;top:60%;left:50%;z-index:1;transition:all .3s ease 0s}
+.product-grid9:hover .social{opacity:1;top:50%}
+.product-grid9 .social li{display:inline-block;color:#fff;background-color:#333;font-size:16px;line-height:40px;text-align:center;height:40px;width:40px;margin:0 2px;display:block;position:relative;transition:all .3s ease-in-out}
+.product-grid9 .social li a{color:#fff;background-color:#333;font-size:16px;line-height:40px;text-align:center;height:40px;width:40px;margin:0 2px;display:block;position:relative;transition:all .3s ease-in-out}
+.product-grid9 .social li a:hover{color:#fff;background-color:#ef5777}
+.product-grid9 .social li a:after,.product-grid .social li a:before{content:attr(data-tip);color:#fff;background-color:#000;font-size:12px;letter-spacing:1px;line-height:20px;padding:1px 5px;white-space:nowrap;opacity:0;transform:translateX(-50%);position:absolute;left:50%;top:-30px}
+.product-grid9 .social li a:after{content:'';height:15px;width:15px;border-radius:0;transform:translateX(-50%) rotate(45deg);top:-20px;z-index:-1}
+.product-grid9 .social li a:hover:after,.product-grid .social li a:hover:before{opacity:1}
 @media only screen and (max-width:990px){.product-grid9{margin-bottom:30px}
 }
 
