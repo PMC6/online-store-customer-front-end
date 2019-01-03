@@ -74,7 +74,7 @@
                     </Row>
                     <Divider />
                 </div>
-                <a style="font-size:16px;color:#ed4014;" @click="showComments()">User comments</a>
+                <a style="font-size:16px;color:#ed4014;" @click="showComments()">Customer Comments</a>
                 <div v-if="commentFlag">
                     <br>
                     <div class="cart-record">
