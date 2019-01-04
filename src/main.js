@@ -8,6 +8,9 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import router from './router'
 import store from './vuex'
+import locale from 'iview/dist/locale/en-US';
+
+Vue.use(iView, {locale: locale});
 
 axios.defaults.withCredentials = true;//让ajax携带cookie
 axios.defaults.baseURL = 'http://39.98.165.19:8080/'

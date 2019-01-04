@@ -1,5 +1,5 @@
 <template>
-    <Tabs id="tabs" value="name1">
+    <Tabs id="tabs" value="name1" :animated="flag">
         <TabPane label="My Detail" icon="md-person" name="name1">
             <Info></Info>
         </TabPane>
@@ -12,7 +12,10 @@
         <TabPane label="Order Detail" icon="md-information-circle" name="name4">
             <OrderDetail></OrderDetail>
         </TabPane>
-        <TabPane label="Change Password" icon="md-build" name="name5">
+        <TabPane label="Buy History" icon="md-information-circle" name="name5">
+            <BuyHistory></BuyHistory>
+        </TabPane>
+        <TabPane label="Change Password" icon="md-build" name="name6">
             <ChangePasswd></ChangePasswd>
         </TabPane>
     </Tabs>
@@ -23,11 +26,12 @@ import WishShop from './tab/WishShop'
 import WishProduct from './tab/WishProduct'
 import OrderDetail from './tab/OrderDetail'
 import ChangePasswd from './tab/ChangePasswd'
+import BuyHistory from './tab/BuyHistory'
 
 export default {
     data() {
         return {
-
+            flag: false
         }
     },
     components: {
@@ -35,6 +39,7 @@ export default {
         'WishShop': WishShop,
         'WishProduct': WishProduct,
         'OrderDetail': OrderDetail,
+        'BuyHistory': BuyHistory,
         'ChangePasswd': ChangePasswd
     }
 }
