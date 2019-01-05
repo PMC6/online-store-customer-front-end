@@ -81,7 +81,7 @@
                         <div class="list-group">
                             <div style="border-bottom: 1px solid #e9e9e9;padding-bottom:6px;margin-bottom:6px;">
                             <div v-if="comments.length == 0"> Don't have any comment</div>
-                            <div v-else style="height:80%;overflowY:scroll">
+                            <div v-else style="height:80%;overflowY:scroll;">
                                 <a v-for="item in comments" :key="item.id" class="list-group-item list-group-item-action flex-column align-items-start">
                                     <div class="d-flex w-100 justify-content-between">
                                         <div style="width:12%;">

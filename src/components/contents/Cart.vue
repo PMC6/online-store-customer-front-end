@@ -9,7 +9,7 @@
             </p>
         </div>
         <div v-else>
-            <div style="border-bottom: 1px solid #e9e9e9;padding-bottom:6px;margin-bottom:6px;">
+            <div style="border-bottom: 1px solid #e9e9e9;padding-bottom:6px;margin-bottom:6px;width:100%;">
             <Checkbox
             :indeterminate="indeterminate"
             :value="checkAll"
@@ -20,10 +20,11 @@
                     <div class="list-group">
                         <div style="border-bottom: 1px solid #e9e9e9;padding-bottom:6px;margin-bottom:6px;">
                         <a v-for="item in data1" :key="item.id" class="list-group-item list-group-item-action flex-column align-items-start">
-                            <Checkbox :label="item">
+                            <Checkbox :label="item" class="checkbox">
                                 <div class="d-flex w-100 justify-content-between">
                                     <div style="width:12%;">
-                                        <img style="height:100px;width:100%;" :src="item.product.image"/>
+                                        <img v-if="item.product.image" style="height:100px;width:100%;" :src="item.product.image"/>
+                                        <img v-else style="height:100px;width:100%;" src="http://bestjquery.com/tutorial/product-grid/demo6/images/img-1.jpg"/>
                                     </div>
                                     <div style="width:86%;">
                                         <div class="d-flex w-100 justify-content-between">
@@ -55,26 +56,28 @@
                cancel-text="cancel"
                ok-text="ok"
                @on-ok="ok">
-               <div v-for="item in checkAllGroup" class="list-group-item list-group-item-action flex-column align-items-start">
-                   <div class="d-flex w-100 justify-content-between">
-                       <div style="width:12%;">
-                           <img style="height:100px;width:100%;" :src="item.product.image"/>
-                       </div>
-                       <div style="width:86%;">
-                           <div class="d-flex w-100 justify-content-between">
-                             <h3 class="mb-1">{{item.product.name}}</h3>
-                             <p>${{item.product.price}}</p>
+               <div>
+                   <div v-for="item in checkAllGroup" class="list-group-item list-group-item-action flex-column align-items-start">
+                       <div class="d-flex w-100 justify-content-between">
+                           <div style="width:12%;">
+                               <img style="height:100px;width:100%;" :src="item.product.image"/>
                            </div>
-                           <p class="mb-1">{{item.product.info}}</p>
-                           <p class="mb-1" style="color:red;">{{item.product.number}} left in stock</p>
-                           <div class="d-flex w-100 justify-content-between">
-                             <Tag type="border" color="success">{{item.product.shop.name}}</Tag>
-                             <InputNumber @on-change="update(item)" size="small" :max="item.product.number" :min="1" v-model="item.number"></InputNumber>
-                             <p style="color:#19be6b;">Total： ${{item.number * item.product.price}}</p>
+                           <div style="width:86%;">
+                               <div class="d-flex w-100 justify-content-between">
+                                 <h3 class="mb-1">{{item.product.name}}</h3>
+                                 <p>${{item.product.price}}</p>
+                               </div>
+                               <p class="mb-1">{{item.product.info}}</p>
+                               <p class="mb-1" style="color:red;">{{item.product.number}} left in stock</p>
+                               <div class="d-flex w-100 justify-content-between">
+                                 <Tag type="border" color="success">{{item.product.shop.name}}</Tag>
+                                 <InputNumber @on-change="update(item)" size="small" :max="item.product.number" :min="1" v-model="item.number"></InputNumber>
+                                 <p style="color:#19be6b;">Total： ${{item.number * item.product.price}}</p>
+                               </div>
                            </div>
                        </div>
-                   </div>
-                </div>
+                    </div>
+               </div>
                 <p class="total-price "><Tag type="dot">Total： ${{total}}</Tag></p>
             </Modal>
     </div>
@@ -184,6 +187,9 @@
     margin-top: 100px;
 }
 .cart-record {
+    width: 100%;
+}
+.ivu-checkbox-group-item {
     width: 100%;
 }
 .list-group {
