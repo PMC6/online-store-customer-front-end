@@ -43,7 +43,7 @@
         <p class="login-title">FEATURED PRODUCTS</p>
         <Divider class="divider" />
         <div class="row">
-          <div v-for="item in productList" class="col-md-3 col-sm-6" @click="clickEvent(item.product)">
+          <div v-for="item in productList" class="col-md-3 col-sm-6">
               <div class="product-grid9">
                   <div class="product-image9">
                       <a v-if="item.image">

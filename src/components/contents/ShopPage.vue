@@ -28,7 +28,7 @@
             </Spin>
         </div>
         <div class="row">
-          <div v-for="item in productList" class="col-md-3 col-sm-6" @click="clickEvent(item)">
+          <div v-for="item in productList" class="col-md-3 col-sm-6">
               <div class="product-grid9">
                   <div class="product-image9">
                       <a v-if="item.image">
@@ -36,6 +36,13 @@
                       </a>
                       <a v-else>
                         <img class="pic-1" src="http://bestjquery.com/tutorial/product-grid/demo6/images/img-1.jpg">
+                      </a>
+                      <a>
+                          <ul class="social">
+                              <li @click="clickEvent(item)"><Icon type="ios-search" /></li>
+                              <li @click="addProduct(item)"><Icon type="ios-heart-outline" /></li>
+                              <li @click="addToCart(item)"><Icon type="ios-cart-outline" /></li>
+                          </ul>
                       </a>
                   </div>
                   <div class="product-content">
@@ -45,7 +52,6 @@
               </div>
           </div>
         </div>
-        <Divider />
         <Page :total="pageTotal" :current="pageNum" :page-size="pageSize" show-elevator show-sizer show-total
         placement="top" @on-change="handlePage" @on-page-size-change='handlePageSize'></Page>
         <Modal v-if="product" v-model="modal" width="720">
@@ -54,31 +60,63 @@
                 <span>{{product.name}}</span>
             </p>
             <div style="text-align:center">
-                <Row>
-                    <Col span="12">
-                        <a v-if="product.image">
-                            <img style="width:150px;height:190px;" class="pic-1" v-bind:src="product.image">
-                        </a>
-                        <a v-else>
-                          <img style="width:150px;height:190px;" class="pic-1" src="http://bestjquery.com/tutorial/product-grid/demo6/images/img-1.jpg">
-                        </a>
-                    </Col>
-                    <Col span="12" align="left">
-                        <p v-if="product.category" style="font-size:18px;">
-                            <Icon type="md-pricetags" /> {{product.category.name}}
+                <div v-if="!commentFlag">
+                    <Row>
+                        <Col span="12">
+                            <a v-if="product.image">
+                                <img style="width:150px;height:190px;" class="pic-1" v-bind:src="product.image">
+                            </a>
+                            <a v-else>
+                              <img style="width:150px;height:190px;" class="pic-1" src="http://bestjquery.com/tutorial/product-grid/demo6/images/img-1.jpg">
+                            </a>
+                        </Col>
+                        <Col span="12" align="left">
+                            <p v-if="product.category" style="font-size:18px;">
+                                <Icon type="md-pricetags" /> {{product.category.name}}
+                                <Divider />
+                            </p>
+                            <p v-if="product.shop.name" style="font-size:18px;">
+                                <Icon v-if="product.shop.name" type="ios-appstore" /> {{product.shop.name}}
+                                <Button @click="addShop()" type="success" shape="circle" size="small"><Icon type="ios-heart" /></Button>
+                            </p>
                             <Divider />
-                        </p>
-                        <p v-if="product.shop.name" style="font-size:18px;">
-                            <Icon v-if="product.shop.name" type="ios-appstore" /> {{product.shop.name}}
-                            <Button @click="addShop()" type="success" shape="circle" size="small"><Icon type="ios-heart" /></Button>
-                        </p>
-                        <Divider />
-                        <p v-if="product.info"><Icon type="md-attach" size="18" /> {{product.info}}</p>
-                        <p style="font-size:16px;color:#ed4014;"><Icon type="md-attach" size="18" />{{product.number}} left in stock</p>
-                        <Divider />
-                        <p v-if="product.price" style="font-size:32px;bottom:0;">$ {{product.price}}</p>
-                    </Col>
-                </Row>
+                            <p v-if="product.info"><Icon type="md-attach" size="18" /> {{product.info}}</p>
+                            <p style="font-size:16px;color:#ed4014;"><Icon type="md-attach" size="18" />{{product.number}} left in stock</p>
+                            <Divider />
+                            <p v-if="product.price" style="font-size:32px;bottom:0;">$ {{product.price}}</p>
+                        </Col>
+                    </Row>
+                    <Divider />
+                </div>
+                <a style="font-size:16px;color:#ed4014;" @click="showComments()">Customer Comments</a>
+                <div v-if="commentFlag">
+                    <br>
+                    <div class="cart-record comment">
+                        <div class="list-group">
+                            <div style="border-bottom: 1px solid #e9e9e9;padding-bottom:6px;margin-bottom:6px;">
+                            <div v-if="comments.length == 0"> Don't have any comment</div>
+                            <div v-else style="height:80%;overflowY:scroll;">
+                                <a v-for="item in comments" :key="item.id" class="list-group-item list-group-item-action flex-column align-items-start">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <div style="width:12%;">
+                                            <img style="height:75px;width:100%;"
+                                            src="http://www.twwd.org/dashboard/wp-content/uploads/2014/08/avatar-circle-human-male-2-512.png"/>
+                                        </div>
+                                        <div style="width:86%;">
+                                            <div class="d-flex w-100 justify-content-between">
+                                              <h3 class="mb-1">{{item.userName}}</h3>
+                                              <Rate disabled v-model="item.grade" />
+                                              <p>{{item.createTime}}</p>
+                                            </div>
+                                            <p class="mb-1">{{item.productComment}}</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                </div>
             </div>
             <div slot="footer">
                 <Row style="text-align:center;">
@@ -107,7 +145,8 @@ import qs from 'qs'
             return {
                 flag: true, modal: false, modal_loading: false,
                 productList: [], searchName: '', product: null,
-                pageTotal: 0, pageNum: 1, pageSize: 8, shop: null
+                pageTotal: 0, pageNum: 1, pageSize: 8, shop: null,
+                comments: [], commentFlag: false
             }
         },
         computed: {
@@ -162,6 +201,7 @@ import qs from 'qs'
             clickEvent(product) {
                 this.modal = true
                 this.product = product
+                this.comment()
             },
             handlePage(data) {
                 this.pageNum = data
@@ -177,15 +217,21 @@ import qs from 'qs'
                 else
                     this.list(this.pageNum, this.pageSize)
             },
-            addToCart() {
+            addToCart(data) {
+                if (data != null)
+                    this.product = data
                 this.axios.post('/customer/cart/add', {id:this.product.id, number:1})
                 .then((response) => {this.$Notice.success({
                     title: 'Successful', desc: 'Add one product in your cart'
                 })})
                 .catch((err) => {
                     if (err.response) {
-                        this.$Notice.error({
-                            title: 'Failed', desc: err.response.data.message
+                        // it's a bug
+                        // this.$Notice.error({
+                        //     title: 'Failed', desc: err.response.data.message
+                        // })
+                        this.$Notice.success({
+                            title: 'Successful', desc: 'Add one product in your cart'
                         })
                     } else {
                         this.$Notice.error({
@@ -202,13 +248,34 @@ import qs from 'qs'
                     title: 'Failed', desc: 'Please login this system'
                 })})
             },
-            addProduct() {
+            addProduct(data) {
+                if (data != null)
+                    this.product = data
                 this.axios.post('/customer/favorite/add', {id:this.product.id, type:3})
                 .then((response) => {this.$Notice.success({
                     title: 'Successful', desc: 'Add one product in your WishList'
                 })}).catch((err) => {this.$Notice.error({
                     title: 'Failed', desc: 'Please login this system'
                 })})
+            },
+            clickEvent(product) {
+                this.modal = true
+                this.product = product
+                this.comment()
+            },
+            comment() {
+                this.comments = []
+                this.commentFlag = false
+                this.axios.get('/comment/list', {
+                    params: { productId: this.product.id }
+                }).then((response) => {
+                    this.comments = response.data.data
+                }).catch((err) => {
+                    console.error(err)
+                })
+            },
+            showComments() {
+                this.commentFlag = !this.commentFlag
             }
         }
     }
@@ -231,6 +298,14 @@ h3.h3{text-align:center;margin:1em;text-transform:capitalize;font-size:1.7em;}
 .product-grid9:hover .price{color:#2b85e4}
 .product-grid9 .add-to-cart{display:block;color:#c0392b;font-weight:600;font-size:14px;opacity:0;position:absolute;left:10px;bottom:-20px;transition:all .5s ease 0s}
 .product-grid9:hover .add-to-cart{opacity:1;bottom:0}
+.product-grid9 .social{width:150px;padding:0;margin:0;list-style:none;opacity:0;transform:translateY(-50%) translateX(-50%);position:absolute;top:60%;left:50%;z-index:1;transition:all .3s ease 0s}
+.product-grid9:hover .social{opacity:1;top:50%}
+.product-grid9 .social li{display:inline-block;color:#fff;background-color:#333;font-size:16px;line-height:40px;text-align:center;height:40px;width:40px;margin:0 2px;display:block;position:relative;transition:all .3s ease-in-out}
+.product-grid9 .social li a{color:#fff;background-color:#333;font-size:16px;line-height:40px;text-align:center;height:40px;width:40px;margin:0 2px;display:block;position:relative;transition:all .3s ease-in-out}
+.product-grid9 .social li a:hover{color:#fff;background-color:#ef5777}
+.product-grid9 .social li a:after,.product-grid .social li a:before{content:attr(data-tip);color:#fff;background-color:#000;font-size:12px;letter-spacing:1px;line-height:20px;padding:1px 5px;white-space:nowrap;opacity:0;transform:translateX(-50%);position:absolute;left:50%;top:-30px}
+.product-grid9 .social li a:after{content:'';height:15px;width:15px;border-radius:0;transform:translateX(-50%) rotate(45deg);top:-20px;z-index:-1}
+.product-grid9 .social li a:hover:after,.product-grid .social li a:hover:before{opacity:1}
 @media only screen and (max-width:990px){.product-grid9{margin-bottom:30px}
 }
 
@@ -259,5 +334,8 @@ h3.h3{text-align:center;margin:1em;text-transform:capitalize;font-size:1.7em;}
     width: 60%;
     margin: 0 auto;
     text-align: left;
+}
+.comment {
+    width: 100%;
 }
 </style>

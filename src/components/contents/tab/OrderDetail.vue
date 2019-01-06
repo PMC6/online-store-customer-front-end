@@ -30,7 +30,6 @@
                                   <InputNumber disabled size="small" v-model="item.number"></InputNumber>
                                   <p style="color:#19be6b;">Total： ${{item.number * item.price}}</p>
                               </div>
-                              <p v-if="processMap[item.status] == 2" style="text-align:right;"><Button @click="shipped()" size="small" type="success">Received your product?</Button></p>
                               <p v-if="processMap[item.status] == 3" style="text-align:right;"><Button @click="showmodal(item)" size="small" type="success">Comment</Button></p>
                           </div>
                       </div>

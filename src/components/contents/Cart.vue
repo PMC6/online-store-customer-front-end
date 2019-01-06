@@ -13,7 +13,7 @@
             <Checkbox
             :indeterminate="indeterminate"
             :value="checkAll"
-            @click.prevent.native="handleCheckAll">全选</Checkbox>
+            @click.prevent.native="handleCheckAll">Select All</Checkbox>
             </div>
             <CheckboxGroup v-model="checkAllGroup" @on-change="checkAllGroupChange">
                 <div class="cart-record">
